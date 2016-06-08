@@ -21,8 +21,14 @@ class RoutePoint(models.Model):
 class Route(models.Model):
     name = models.CharField(max_length=255, blank=True, default='')
     description = HTMLField(default='', blank=True)
-    points = models.ManyToManyField(RoutePoint, blank=True, null=True)
+    points = models.ManyToManyField(RoutePoint, blank=True, null=True, through='RoutePontM2M')
     user = models.ForeignKey(User)
 
     def __str__(self):
         return self.name
+
+
+class RoutePontM2M(models.Model):
+    point = models.ForeignKey(RoutePoint, on_delete=models.CASCADE)
+    root = models.ForeignKey(Route, on_delete=models.CASCADE)
+    point_number = models.PositiveIntegerField()

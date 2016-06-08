@@ -111,7 +111,6 @@ DATABASES = {
     }
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 
 # GENERAL CONFIGURATION
