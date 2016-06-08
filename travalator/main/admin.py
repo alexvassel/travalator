@@ -9,7 +9,7 @@ class RoutePontM2MInline(admin.TabularInline):
 
 @admin.register(RoutePoint)
 class RoutePointAdmin(admin.ModelAdmin):
-    inlines = (RoutePontM2MInline,)
+    pass
 
 
 @admin.register(Route)
