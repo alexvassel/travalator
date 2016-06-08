@@ -39,12 +39,14 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'location_field.apps.DefaultConfig',
+    'location_field',
+    'tinymce'
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'travalator.users',  # custom users app
+    'travalator.main'
     # Your stuff: custom apps go here
 )
 
@@ -100,7 +102,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'travalator',
         'USER': 'geouser',
         'PASSWORD': 'geopassword',
@@ -109,6 +111,7 @@ DATABASES = {
     }
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 
 # GENERAL CONFIGURATION

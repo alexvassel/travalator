@@ -46,3 +46,5 @@ redis>=2.10.0
 
 # Your custom requirements go here
 git+git://github.com/caioariede/django-location-field.git@master
+
+django-tinymce==2.3.0
