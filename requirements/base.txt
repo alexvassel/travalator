@@ -5,7 +5,7 @@
 wheel==0.29.0
 
 # Bleeding edge Django
-django==1.9.7
+django==1.9.6
 
 # Configuration
 django-environ==0.4.0
@@ -20,8 +20,6 @@ django-floppyforms==1.6.2
 # Models
 django-model-utils==2.5
 
-# Images
-Pillow==3.2.0
 
 # For user registration, either via email or social
 # Well-built with regular release cycles!
@@ -37,12 +35,6 @@ django-autoslug==1.9.3
 
 # Time zones support
 pytz==2016.4
-
-# Redis support
-django-redis==4.4.3
-redis>=2.10.0
-
-
 
 # Your custom requirements go here
 git+git://github.com/caioariede/django-location-field.git@master
