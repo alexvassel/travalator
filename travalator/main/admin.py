@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import RoutePoint, Route, RoutePontM2M
+from .models import RoutePoint, Route, RoutePointM2M
 
 
 class RoutePontM2MInline(admin.TabularInline):
-    model = RoutePontM2M
+    model = RoutePointM2M
     extra = 1
 
 
