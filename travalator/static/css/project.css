@@ -36,3 +36,9 @@
 [hidden][style="display: block;"] {
   display: block !important;
 }
+
+.container, #map_canvas, html, body
+{
+  height: 100%;
+}
+

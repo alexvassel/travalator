@@ -4,24 +4,6 @@
 {% block title %}Route: {{ route }}{% endblock %}
 
 {% block content %}
-<div class="container">
-
-  <div class="row">
-    <div class="col-sm-12">
-
-      <h2>{{ route }}</h2>
-      {% if route %}
-        {% for point in route.points.all %}
-            {{ point }}
-        {% endfor %}
-
-      {% endif %}
-    </div>
-  </div>
-
-
-
-
-</div>
+<div id="map_canvas"></div>
 {% endblock content %}
 
