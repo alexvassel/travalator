@@ -17,6 +17,9 @@ class RoutePoint(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('routepointm2m__point_number',)
+
 
 class Route(models.Model):
     name = models.CharField(max_length=255, blank=True, default='')

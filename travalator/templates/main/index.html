@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}User: {{ object }}{% endblock %}
+{% block title %}Route: {{ route }}{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -9,9 +9,12 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <h2>{{ object }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
+      <h2>{{ route }}</h2>
+      {% if route %}
+        {% for point in route.points.all %}
+            {{ point }}
+        {% endfor %}
+
       {% endif %}
     </div>
   </div>

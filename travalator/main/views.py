@@ -9,6 +9,7 @@ from .models import Route
 class IndexView(LoginRequiredMixin, DetailView):
     model = Route
     template_name = 'main/index.html'
+    context_object_name = 'route'
 
     def get_object(self, queryset=None):
         return self.model.objects.order_by('?').first()
