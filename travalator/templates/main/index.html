@@ -4,6 +4,12 @@
 {% block title %}Route: {{ route }}{% endblock %}
 
 {% block content %}
-    <div id="map_canvas" data-lng="{{ route.center.get_x }}" data-lat="{{ route.center.get_y }}" data-route="{{ route.pk }}"></div>
+    <div id="map_canvas" data-lng="{{ route.center.get_x }}" data-lat="{{ route.center.get_y }}" data-route="{{ route.pk }}" data-points="{% url 'route_points' route.pk %}"></div>
 {% endblock content %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'js/index.js' %}"></script>
+{% endblock javascript %}
+
 
