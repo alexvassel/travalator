@@ -4,6 +4,6 @@
 {% block title %}Route: {{ route }}{% endblock %}
 
 {% block content %}
-<div id="map_canvas"></div>
+    <div id="map_canvas" data-lat="{{ route.center.get_x }}" data-long="{{ route.center.get_y }}"></div>
 {% endblock content %}
 

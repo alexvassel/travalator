@@ -26,6 +26,7 @@ class Route(models.Model):
     description = HTMLField(default='', blank=True)
     points = models.ManyToManyField(RoutePoint, through='RoutePointM2M')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    center = LocationField(based_fields=['name'], zoom=7, default='POINT(0.0 0.0)')
 
     def __str__(self):
         return self.name

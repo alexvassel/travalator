@@ -6,10 +6,12 @@ $( document ).ready(function() {
 });
 
 function initMap() {
-  // Create a map object and specify the DOM element for display.
-  var map = new google.maps.Map(document.getElementById('map_canvas'), {
-    center: {lat: -34.397, lng: 150.644},
-    scrollwheel: false,
+    // Create a map object and specify the DOM element for display.
+    var mapElement = document.getElementById('map_canvas');
+    var centerPoint = new google.maps.LatLng($(mapElement).data('long'), $(mapElement).data('lat'));
+    var map = new google.maps.Map(mapElement, {
+    center: centerPoint,
+    scrollwheel: true,
     zoom: 8
   });
 }
