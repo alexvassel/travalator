@@ -9,7 +9,7 @@ from tinymce.models import HTMLField
 from ..users.models import User
 
 
-class DescriptionedMoel(TimeStampedModel):
+class DescriptionedModel(TimeStampedModel):
     name = models.CharField(max_length=255, blank=True, default='')
     description = HTMLField(default='', blank=True)
 
@@ -17,9 +17,15 @@ class DescriptionedMoel(TimeStampedModel):
         abstract = True
 
 
-class RoutePoint(DescriptionedMoel):
-    location = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
+class UserModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class RoutePoint(DescriptionedModel, UserModel):
+    location = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
 
     objects = models.GeoManager()
 
@@ -30,9 +36,8 @@ class RoutePoint(DescriptionedMoel):
         ordering = ('routepointm2m__point_number',)
 
 
-class Route(DescriptionedMoel):
+class Route(DescriptionedModel, UserModel):
     points = models.ManyToManyField(RoutePoint, through='RoutePointM2M')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     center = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
 
     objects = models.GeoManager()
