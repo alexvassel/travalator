@@ -8,7 +8,10 @@ $( document ).ready(function() {
     $.ajax({
         url: '/route/' + $(mapElement).data('route') + '/points/'
     }).done(function(response) {
-        if (response.error !== undefined) {console.log(response.message)}
+        if (response.error !== undefined) {
+            console.log(response.message);
+            return
+        }
         setMarkers(response.data.points, map);
     });
 });
