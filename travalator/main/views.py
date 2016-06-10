@@ -1,9 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, View
 
-from .models import Route, RoutePoint
+from .models import Route
 
 
 class IndexView(LoginRequiredMixin, DetailView):

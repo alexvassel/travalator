@@ -4,7 +4,7 @@ from .models import RoutePoint, Route, RoutePointM2M
 
 class RoutePontM2MInline(admin.TabularInline):
     model = RoutePointM2M
-    extra = 1
+    extra = 0
 
 
 @admin.register(RoutePoint)
