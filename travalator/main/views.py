@@ -16,7 +16,6 @@ class IndexView(LoginRequiredMixin, DetailView):
 
 
 class PointsListView(LoginRequiredMixin, View):
-    model = RoutePoint
 
     def get(self, *args, **kw):
         response = dict(points=[])

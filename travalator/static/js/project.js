@@ -2,16 +2,44 @@
 
 // A $( document ).ready() block.
 $( document ).ready(function() {
-    initMap();
+    var mapElement = document.getElementById('map_canvas');
+    var map = initMap(mapElement);
+
+    $.ajax({
+        url: '/route/' + $(mapElement).data('route') + '/points/'
+    }).done(function(response) {
+        if (response.error !== undefined) {console.log(response.message)}
+        setMarkers(response.data.points, map);
+    });
 });
 
-function initMap() {
-    // Create a map object and specify the DOM element for display.
-    var mapElement = document.getElementById('map_canvas');
-    var centerPoint = new google.maps.LatLng($(mapElement).data('long'), $(mapElement).data('lat'));
-    var map = new google.maps.Map(mapElement, {
+function initMap(mapElement) {
+    var centerPoint = {lat: $(mapElement).data('lat'), lng: $(mapElement).data('lng')};
+    return new google.maps.Map(mapElement, {
     center: centerPoint,
     scrollwheel: true,
-    zoom: 8
+    zoom: 6
   });
+}
+
+function setMarkers(points, map) {
+    $.each(points, function(_, point) {
+
+        var marker = new google.maps.Marker({
+            position: {lat: point.location[1], lng: point.location[0]},
+            title: point.name,
+            animation: google.maps.Animation.DROP,
+        });
+        setMarkerInfo(point, marker, map);
+        marker.setMap(map);
+    });
+}
+
+function setMarkerInfo(point, marker, map) {
+    var infowindow = new google.maps.InfoWindow({
+            content: point.description
+    });
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
 }
