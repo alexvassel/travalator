@@ -4,11 +4,9 @@ from __future__ import unicode_literals, absolute_import
 from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 
-@python_2_unicode_compatible
 class User(AbstractUser):
 
     # First Name and Last Name do not cover name patterns
@@ -20,3 +18,12 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
+
+
+class Tourist(User):
+    pass
+
+
+class Agency(User):
+    inn = models.CharField(_('inn'), blank=True, max_length=255)
+    kpp = models.CharField(_('kpp'), blank=True, max_length=255)

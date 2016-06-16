@@ -7,12 +7,13 @@
 {% block content %}
     {% if route %}
         <div id="map_canvas" data-lng="{{ route.center.get_x }}" data-lat="{{ route.center.get_y }}" data-route="{{ route.pk }}" data-points="{% url 'main:route_points' route.pk %}"></div>
+
+        Длина пути - {{ route.length }} км. <br>
+        {% for points in route.pairwised_points %}
+             Расстояние от {{ points.0.name }} до {{ points.1.name }} - {{  points.0 | distance:points.1 }} км.
+             <br>
+        {% endfor %}
     {% endif %}
-    Длина пути - {{ route.length }} км. <br>
-    {% for points in route.pairwised_points %}
-         Расстояние от {{ points.0.name }} до {{ points.1.name }} - {{  points.0 | distance:points.1 }} км.
-         <br>
-    {% endfor %}
 
 {% endblock content %}
 
