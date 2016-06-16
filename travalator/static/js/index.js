@@ -49,17 +49,23 @@ function setMarkerInfo(point, marker, map) {
 function setLines(points, map) {
     var rootPoints = [];
 
+    var lineSymbol = {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW};
+
     $.each(points, function(_, point) {
         rootPoints.push({lat: point.location[1], lng: point.location[0]});
+        var flightPath = new google.maps.Polyline({
+        path: rootPoints,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        icons: [{
+          icon: lineSymbol,
+          offset: '100%'
+        }]
+      });
+      flightPath.setMap(map);
     });
 
-    var flightPath = new google.maps.Polyline({
-    path: rootPoints,
-    geodesic: true,
-    strokeColor: '#FF0000',
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-  });
 
-  flightPath.setMap(map);
 }
