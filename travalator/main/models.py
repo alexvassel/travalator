@@ -1,6 +1,7 @@
 from itertools import tee
 
 from django.contrib.gis.db import models
+from django.utils.functional import cached_property
 
 from location_field.models.spatial import LocationField
 from model_utils.models import TimeStampedModel
@@ -42,14 +43,30 @@ class Route(DescriptionedModel, UserModel):
 
     objects = models.GeoManager()
 
-    @property
+    @cached_property
+    def formatted_points(self):
+        data = dict(points=[])
+        for p in self.points.all():
+            point = dict(location=p.location.get_coords())
+            point['name'] = p.name
+            point['description'] = p.description
+            data['points'].append(point)
+        return data
+
+    @cached_property
     def length(self):
         # километры
-        return sum(a.location.distance(b.location)
-                   for (a, b) in self._pairwise(self.points.all())) * 100
+        length = sum(a.location.distance(b.location)
+                     for (a, b) in self.pairwise(self.points.all())) * 100
+        return round(length)
+
+    @cached_property
+    def pairwised_points(self):
+        """route.points.all() -> (point0, points1), (point1, point2), (point2, point3), ..."""
+        return self.pairwise(self.points.all())
 
     @staticmethod
-    def _pairwise(iterable):
+    def pairwise(iterable):
         """s -> (s0,s1), (s1,s2), (s2, s3), ..."""
         a, b = tee(iterable)
         next(b, None)
