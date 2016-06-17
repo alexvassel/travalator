@@ -57,16 +57,16 @@ class Route(DescriptionedModel, UserModel):
     def length(self):
         # километры
         length = sum(a.location.distance(b.location)
-                     for (a, b) in self.pairwise(self.points.all())) * 100
+                     for (a, b) in self._pairwise(self.points.all())) * 100
         return round(length)
 
     @cached_property
     def pairwised_points(self):
         """route.points.all() -> (point0, points1), (point1, point2), (point2, point3), ..."""
-        return self.pairwise(self.points.all())
+        return self._pairwise(self.points.all())
 
     @staticmethod
-    def pairwise(iterable):
+    def _pairwise(iterable):
         """s -> (s0,s1), (s1,s2), (s2, s3), ..."""
         a, b = tee(iterable)
         next(b, None)
