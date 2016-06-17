@@ -4,18 +4,21 @@
 
 $( document ).ready(function() {
     var mapElement = document.getElementById('map_canvas');
-    var map = initMap(mapElement);
 
-    $.ajax({
-        url: $(mapElement).data('points')
-    }).done(function(response) {
-        if (response.error !== undefined) {
-            console.log(response.message);
-            return
-        }
-        setMarkers(response.data.points, map);
-        setLines(response.data.points, map);
-    });
+    if (mapElement !== null) {
+        var map = initMap(mapElement);
+
+        $.ajax({
+            url: $(mapElement).data('points')
+        }).done(function (response) {
+            if (response.error !== undefined) {
+                console.log(response.message);
+                return
+            }
+            setMarkers(response.data.points, map);
+            setLines(response.data.points, map);
+        });
+    }
 });
 
 function initMap(mapElement) {
@@ -64,6 +67,4 @@ function setLines(points, map) {
             }]});
         flightPath.setMap(map);
     });
-
-
 }
