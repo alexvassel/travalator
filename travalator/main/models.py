@@ -14,31 +14,35 @@ class DescriptionedModel(TimeStampedModel):
     name = models.CharField(max_length=255, blank=True, default='')
     description = HTMLField(default='', blank=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         abstract = True
 
 
 class UserModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         abstract = True
 
 
-class RoutePoint(DescriptionedModel, UserModel):
+class Point(DescriptionedModel):
     location = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
 
     objects = models.GeoManager()
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         ordering = ('routepointm2m__point_number',)
 
 
+class AgencyPoint(Point, UserModel):
+    objects = models.GeoManager()
+
+
 class Route(DescriptionedModel, UserModel):
-    points = models.ManyToManyField(RoutePoint, through='RoutePointM2M')
+    points = models.ManyToManyField(Point, through='RoutePointM2M')
     center = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
 
     objects = models.GeoManager()
@@ -46,7 +50,7 @@ class Route(DescriptionedModel, UserModel):
     @cached_property
     def formatted_points(self):
         data = dict(points=[])
-        for p in self.points.all():
+        for p in self.tourist_points:
             point = dict(location=p.location.get_coords())
             point['name'] = p.name
             point['description'] = p.description
@@ -57,13 +61,13 @@ class Route(DescriptionedModel, UserModel):
     def length(self):
         # километры
         length = sum(a.location.distance(b.location)
-                     for (a, b) in self._pairwise(self.points.all())) * 100
+                     for (a, b) in self._pairwise(self.tourist_points)) * 100
         return round(length)
 
     @cached_property
     def pairwised_points(self):
         """route.points.all() -> (point0, points1), (point1, point2), (point2, point3), ..."""
-        return self._pairwise(self.points.all())
+        return self._pairwise(self.tourist_points)
 
     @staticmethod
     def _pairwise(iterable):
@@ -72,11 +76,15 @@ class Route(DescriptionedModel, UserModel):
         next(b, None)
         return zip(a, b)
 
+    @cached_property
+    def tourist_points(self):
+        return self.points.filter(agencypoint=None)
+
     def __str__(self):
         return self.name
 
 
 class RoutePointM2M(models.Model):
-    point = models.ForeignKey(RoutePoint, on_delete=models.CASCADE)
+    point = models.ForeignKey(Point, on_delete=models.CASCADE)
     root = models.ForeignKey(Route, on_delete=models.CASCADE)
-    point_number = models.PositiveIntegerField()
+    point_number = models.PositiveIntegerField(blank=True, null=True)
