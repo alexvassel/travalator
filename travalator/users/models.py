@@ -17,9 +17,14 @@ class User(AbstractUser):
 
 
 class Tourist(User):
-    pass
+    class Meta:
+        verbose_name = 'Tourist'
 
 
 class Agency(User):
     inn = models.CharField(_('inn'), blank=True, max_length=255)
     kpp = models.CharField(_('kpp'), blank=True, max_length=255)
+
+    class Meta:
+        verbose_name = 'Agency'
+        verbose_name_plural = 'Agencies'

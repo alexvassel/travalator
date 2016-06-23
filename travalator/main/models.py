@@ -7,7 +7,7 @@ from location_field.models.spatial import LocationField
 from model_utils.models import TimeStampedModel
 from tinymce.models import HTMLField
 
-from ..users.models import User
+from ..users.models import Tourist, Agency
 
 
 class DescriptionedModel(TimeStampedModel):
@@ -16,13 +16,6 @@ class DescriptionedModel(TimeStampedModel):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        abstract = True
-
-
-class UserModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         abstract = True
@@ -37,14 +30,17 @@ class Point(DescriptionedModel):
         ordering = ('routepointm2m__point_number',)
 
 
-class AgencyPoint(Point, UserModel):
+class AgencyPoint(Point):
+    agency = models.ForeignKey(Agency, on_delete=models.CASCADE)
+
     objects = models.GeoManager()
 
 
-class Route(DescriptionedModel, UserModel):
+class Route(DescriptionedModel):
     points = models.ManyToManyField(Point, through='RoutePointM2M')
     center = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
-
+    saved_by = models.ManyToManyField(Tourist, blank=True, related_name='saved_by')
+    tourist = models.ForeignKey(Tourist, on_delete=models.CASCADE)
     objects = models.GeoManager()
 
     @cached_property

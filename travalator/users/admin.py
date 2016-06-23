@@ -5,7 +5,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from .models import User
+from .models import User, Tourist, Agency
 
 
 class MyUserChangeForm(UserChangeForm):
@@ -37,3 +37,13 @@ class MyUserAdmin(AuthUserAdmin):
     add_form = MyUserCreationForm
     list_display = ('username', 'is_superuser')
     search_fields = ['username']
+
+
+@admin.register(Tourist)
+class TouristAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Agency)
+class AgencyAdmin(admin.ModelAdmin):
+    pass
