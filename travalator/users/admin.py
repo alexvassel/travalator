@@ -5,7 +5,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from .models import User, Tourist, Agency
+from .models import User, Tourist, Company
 
 
 class MyUserChangeForm(UserChangeForm):
@@ -44,6 +44,6 @@ class TouristAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Agency)
+@admin.register(Company)
 class AgencyAdmin(admin.ModelAdmin):
     pass
