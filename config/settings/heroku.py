@@ -51,9 +51,6 @@ DEBUG_TOOLBAR_CONFIG = {
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ('django_extensions', )
 
-# TESTING
-# ------------------------------------------------------------------------------
-TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 
 DATABASES['default'] = dj_database_url.config()
