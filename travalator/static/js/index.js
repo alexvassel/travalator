@@ -50,13 +50,13 @@ function setMarkerInfo(point, marker, map) {
 }
 
 function setLines(points, map) {
-    var rootPoints = [];
+    var routePoints = [];
     var lineSymbol = {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW};
 
     $.each(points, function(_, point) {
-        rootPoints.push({lat: point.location[1], lng: point.location[0]});
+        routePoints.push({lat: point.location[1], lng: point.location[0]});
         var flightPath = new google.maps.Polyline({
-            path: rootPoints,
+            path: routePoints,
             geodesic: true,
             strokeColor: '#FF0000',
             strokeOpacity: 1.0,

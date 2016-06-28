@@ -2,9 +2,11 @@ from itertools import tee
 
 from django.contrib.gis.db import models
 from django.utils.functional import cached_property
+from django.utils.translation import ugettext_lazy as _
 
 from location_field.models.spatial import LocationField
 from model_utils.models import TimeStampedModel
+from phonenumber_field.modelfields import PhoneNumberField
 from tinymce.models import HTMLField
 
 from ..users.models import Tourist, Company, User
@@ -21,32 +23,17 @@ class DescriptionedModel(TimeStampedModel):
         abstract = True
 
 
-class Point(DescriptionedModel):
-    location = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
-
-    objects = models.GeoManager()
-
-    class Meta:
-        ordering = ('routepointm2m__point_number',)
-
-
-class CompanyPoint(Point):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-
-    objects = models.GeoManager()
-
-
-class AdminPoint(Point):
-    admin = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    objects = models.GeoManager()
-
-
 class Route(DescriptionedModel):
-    points = models.ManyToManyField(Point, through='RoutePointM2M')
-    center = LocationField(based_fields=['name'], default='POINT(0.0 0.0)')
-    saved_by = models.ManyToManyField(Tourist, blank=True, related_name='saved_by')
-    tourist = models.ForeignKey(Tourist, on_delete=models.CASCADE)
+    points = models.ManyToManyField('Point', through='RoutePointM2M', verbose_name=_('points'))
+    center = LocationField(verbose_name=_('center'), based_fields=['name'],
+                           default='POINT(0.0 0.0)')
+    saved_by = models.ManyToManyField(Tourist, through='SavedRoutes', blank=True,
+                                      related_name='saved_by', verbose_name=_('saved_by'))
+    tourist = models.ForeignKey(Tourist, on_delete=models.CASCADE, verbose_name=_('tourist'))
+    popularity = models.PositiveIntegerField(_('popularity'), blank=True, null=True)
+    cost = models.PositiveIntegerField(_('cost'), blank=True, null=True)
+    extremality = models.PositiveSmallIntegerField(_('extremality'), blank=True, null=True)
+
     objects = models.GeoManager()
 
     @cached_property
@@ -73,7 +60,7 @@ class Route(DescriptionedModel):
 
     @staticmethod
     def _pairwise(iterable):
-        """s -> (s0,s1), (s1,s2), (s2, s3), ..."""
+        """iterable -> (iterable[0], iterable[1]), (iterable[1], iterable[2]), ...)"""
         a, b = tee(iterable)
         next(b, None)
         return zip(a, b)
@@ -94,7 +81,49 @@ class Route(DescriptionedModel):
         return self.name
 
 
+class Point(DescriptionedModel):
+    location = LocationField(based_fields=['name'], default='POINT(0.0 0.0)',
+                             verbose_name=_('location'))
+    phone = PhoneNumberField(_('phone'), max_length=12)
+
+    objects = models.GeoManager()
+
+    class Meta:
+        ordering = ('routepointm2m__point_number',)
+
+
+class CompanyPoint(Point):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_('company'))
+
+    objects = models.GeoManager()
+
+
+class AdminPoint(Point):
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('admin'))
+
+    objects = models.GeoManager()
+
+
 class RoutePointM2M(models.Model):
-    point = models.ForeignKey(Point, on_delete=models.CASCADE)
-    root = models.ForeignKey(Route, on_delete=models.CASCADE)
-    point_number = models.PositiveIntegerField(blank=True, null=True)
+    point = models.ForeignKey(Point, on_delete=models.CASCADE, verbose_name=_('point'))
+    route = models.ForeignKey(Route, on_delete=models.CASCADE, verbose_name=_('route'))
+    point_number = models.PositiveIntegerField(blank=True, null=True,
+                                               verbose_name=_('point number'))
+
+    def __str__(self):
+        return str()
+
+    class Meta:
+        verbose_name_plural = 'Points'
+
+
+class SavedRoutes(TimeStampedModel):
+    route = models.ForeignKey(Route, verbose_name=_('route'))
+    tourist = models.ForeignKey(Tourist, verbose_name=_('tourist'))
+
+    def __str__(self):
+        return str()
+
+    class Meta:
+        verbose_name_plural = 'Saved by'
+        verbose_name = 'Saved by'
