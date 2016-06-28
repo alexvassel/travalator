@@ -55,4 +55,4 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Your local stuff: Below this line define 3rd party library settings
 
-DATABASES['default']['host'] = '''postgres://tvfaumotwkhcyr:ePwnV5z-jdHHbfChG-jPyX7iV9@ec2-54-243-220-140.compute-1.amazonaws.com:5432/d8djt6q4ib4cvq'''
+DATABASES['default'] = env.db('DATABASE_URL')
