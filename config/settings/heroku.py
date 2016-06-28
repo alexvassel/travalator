@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import dj_database_url
+
 from .common import *  # noqa
 
 # DEBUG
@@ -55,4 +57,5 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Your local stuff: Below this line define 3rd party library settings
 
-DATABASES['default'] = env.db('DATABASE_URL')
+DATABASES['default'] =  dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
