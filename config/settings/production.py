@@ -133,7 +133,7 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-DATABASES['default'] = env.db('DATABASE_URL')
+DATABASES['default'] = 'postgres://tvfaumotwkhcyr:ePwnV5z-jdHHbfChG-jPyX7iV9@ec2-54-243-220-140.compute-1.amazonaws.com:5432/d8djt6q4ib4cvq'
 
 # CACHING
 # ------------------------------------------------------------------------------

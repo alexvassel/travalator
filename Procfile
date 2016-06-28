@@ -1,1 +1,1 @@
-web: gunicorn Testing.wsgi -b 0.0.0.0:$PORT
+web: gunicorn config.wsgi -b 0.0.0.0:80
