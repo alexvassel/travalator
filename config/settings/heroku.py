@@ -17,11 +17,11 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='8xr3)ik4)@aq%ty=h5nq-+0c5cbt#@*t4
 # Mail settings
 # ------------------------------------------------------------------------------
 
-EMAIL_HOST_USER = env('SENDGRID_USERNAME')
+EMAIL_HOST_USER = 'app49536535@heroku.com'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = env('SENDGRID_PASSWORD')
+EMAIL_HOST_PASSWORD = 'if01ibob6270'
 
 # CACHING
 # ------------------------------------------------------------------------------
