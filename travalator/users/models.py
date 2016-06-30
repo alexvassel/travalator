@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.urlresolvers import reverse
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
@@ -31,6 +32,10 @@ class Tourist(User):
     age = models.PositiveSmallIntegerField(_('age'), blank=True, null=True)
     martial_status = models.PositiveSmallIntegerField(_('martial status'), null=True, blank=True,
                                                       choices=Martial.choices.items())
+
+    @cached_property
+    def social(self):
+        return self.socialaccount_set.first()
 
     class Meta:
         verbose_name = 'Tourist'
