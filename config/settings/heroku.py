@@ -52,5 +52,6 @@ DEBUG_TOOLBAR_CONFIG = {
 INSTALLED_APPS += ('django_extensions', )
 
 DATABASES['default'] = dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
