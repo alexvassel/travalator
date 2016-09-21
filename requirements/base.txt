@@ -37,7 +37,7 @@ django-autoslug==1.9.3
 pytz==2016.4
 
 # Your custom requirements go here
-django-location-field==1.6
+django-location-field==1.6.1
 
 django-tinymce==2.3.0
 django-jsonview==1.0.0
