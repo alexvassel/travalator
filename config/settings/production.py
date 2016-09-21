@@ -77,6 +77,7 @@ AWS_HEADERS = {
 
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
+AWS_STORAGE_BUCKET_NAME = 'travalator'
 
 #  See:http://stackoverflow.com/questions/10390244/
 from storages.backends.s3boto import S3BotoStorage
@@ -86,7 +87,7 @@ DEFAULT_FILE_STORAGE = 'config.settings.production.MediaRootS3BotoStorage'
 
 AWS_ACCESS_KEY_ID = 'AKIAJDJ26DRIM5FIKERQ'
 AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'travalator'
+
 
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
