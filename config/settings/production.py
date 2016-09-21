@@ -67,6 +67,8 @@ INSTALLED_APPS += (
 # AWS cache settings, don't change unless you know what you're doing:
 AWS_EXPIRY = 60 * 60 * 24 * 7
 
+AWS_S3_HOST = 's3.amazonaws.com'
+
 # TODO See: https://github.com/jschneier/django-storages/issues/47
 # Revert the following and use str after the above-mentioned bug is fixed in
 # either django-storage-redux or boto
@@ -77,7 +79,7 @@ AWS_HEADERS = {
 
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
-AWS_STORAGE_BUCKET_NAME = 'travalator'
+AWS_STORAGE_BUCKET_NAME = 'trotrotro'
 
 #  See:http://stackoverflow.com/questions/10390244/
 from storages.backends.s3boto import S3BotoStorage
