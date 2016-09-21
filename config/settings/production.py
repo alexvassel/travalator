@@ -85,8 +85,8 @@ StaticRootS3BotoStorage = lambda: S3BotoStorage(location='static')
 MediaRootS3BotoStorage = lambda: S3BotoStorage(location='media')
 DEFAULT_FILE_STORAGE = 'config.settings.production.MediaRootS3BotoStorage'
 
-AWS_ACCESS_KEY_ID = 'AKIAJDJ26DRIM5FIKERQ'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 
 
 AWS_AUTO_CREATE_BUCKET = True
