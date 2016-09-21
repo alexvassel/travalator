@@ -11,8 +11,9 @@ Production Configurations
 """
 from __future__ import absolute_import, unicode_literals
 
-from boto.s3.connection import OrdinaryCallingFormat
 from django.utils import six
+
+from boto.s3.connection import OrdinaryCallingFormat
 
 
 from .common import *  # noqa
@@ -21,7 +22,7 @@ from .common import *  # noqa
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='8xr3)ik4)@aq%ty=h5nq-+0c5cbt#@*t4)%wi&whmdzc&d83%d')
 
 
 # This ensures that Django will be able to detect a secure connection
@@ -34,28 +35,25 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # and https://docs.djangoproject.com/ja/1.9/howto/deployment/checklist/#run-manage-py-check-deploy
 
 # set this to 60 seconds and then to 518400 when you can prove it works
-SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_SECONDS = 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=False)
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
-    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
-SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = True
+    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=False)
+SECURE_BROWSER_XSS_FILTER = False
+SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_HTTPONLY = False
+SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=False)
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
 X_FRAME_OPTIONS = 'DENY'
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['example.com'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['travalator.alexandkate.info'])
 # END SITE CONFIGURATION
-
-INSTALLED_APPS += ('gunicorn', )
-
 
 # STORAGE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -65,13 +63,6 @@ INSTALLED_APPS += ('gunicorn', )
 INSTALLED_APPS += (
     'storages',
 )
-
-AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
-AWS_AUTO_CREATE_BUCKET = True
-AWS_QUERYSTRING_AUTH = False
-AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
 # AWS cache settings, don't change unless you know what you're doing:
 AWS_EXPIRY = 60 * 60 * 24 * 7
@@ -92,6 +83,14 @@ from storages.backends.s3boto import S3BotoStorage
 StaticRootS3BotoStorage = lambda: S3BotoStorage(location='static')
 MediaRootS3BotoStorage = lambda: S3BotoStorage(location='media')
 DEFAULT_FILE_STORAGE = 'config.settings.production.MediaRootS3BotoStorage'
+
+AWS_ACCESS_KEY_ID = 'AKIAJDJ26DRIM5FIKERQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'travalator'
+
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
 MEDIA_URL = 'https://s3.amazonaws.com/%s/media/' % AWS_STORAGE_BUCKET_NAME
 
@@ -115,11 +114,11 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[travalator] 
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Anymail with Mailgun
-INSTALLED_APPS += ("anymail", )
+INSTALLED_APPS += ('anymail',)
 ANYMAIL = {
-    "MAILGUN_API_KEY": env('DJANGO_MAILGUN_API_KEY'),
+    'MAILGUN_API_KEY': env('DJANGO_MAILGUN_API_KEY', '63092c70f9558ef55f94204171a7c331'),
 }
-EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
+EMAIL_BACKEND = 'anymail.backends.mailgun.MailgunBackend'
 
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -127,13 +126,15 @@ EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader
 TEMPLATES[0]['OPTIONS']['loaders'] = [
     ('django.template.loaders.cached.Loader', [
-        'django.template.loaders.filesystem.Loader', 'django.template.loaders.app_directories.Loader', ]),
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader', ]),
 ]
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-DATABASES['default'] = env.db('DATABASE_URL')
+# DATABASES['default'] = env.db('DATABASE_URL')
+
 
 # CACHING
 # ------------------------------------------------------------------------------
@@ -200,6 +201,6 @@ LOGGING = {
 }
 
 # Custom Admin URL, use {% url 'admin:index' %}
-ADMIN_URL = env('DJANGO_ADMIN_URL')
+# ADMIN_URL = env('DJANGO_ADMIN_URL')
 
 # Your production stuff: Below this line define 3rd party library settings
