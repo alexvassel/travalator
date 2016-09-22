@@ -76,4 +76,5 @@ utility/
 static/
 
 env.example
+config/uwsgi.ini
 
