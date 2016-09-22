@@ -22,7 +22,9 @@ $( document ).ready(function() {
 });
 
 function initMap(mapElement) {
-    var centerPoint = {lat: $(mapElement).data('lat'), lng: $(mapElement).data('lng')};
+    var lat = parseFloat($(mapElement).data('lat'));
+    var lng = parseFloat($(mapElement).data('lng'));
+    var centerPoint = {lat: lat, lng: lng};
     return new google.maps.Map(mapElement, {
         center: centerPoint,
         scrollwheel: true,

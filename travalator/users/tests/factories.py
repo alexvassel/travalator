@@ -2,8 +2,8 @@ import factory
 
 
 class BaseUserFactory(factory.django.DjangoModelFactory):
-    username = factory.Sequence(lambda n: 'user-{0}'.format(n))
-    email = factory.Sequence(lambda n: 'user-{0}@example.com'.format(n))
+    username = factory.Sequence(lambda n: 'user-{0}'.format(n + 1))
+    email = factory.Sequence(lambda n: 'user-{0}@example.com'.format(n + 1))
     password = factory.PostGenerationMethodCall('set_password', 'password')
 
 
