@@ -110,9 +110,6 @@ class RoutePointM2M(models.Model):
     point_number = models.PositiveIntegerField(blank=True, null=True,
                                                verbose_name=_('point number'))
 
-    def __str__(self):
-        return str()
-
     class Meta:
         verbose_name_plural = 'Points'
 
@@ -120,9 +117,6 @@ class RoutePointM2M(models.Model):
 class SavedRoutes(TimeStampedModel):
     route = models.ForeignKey(Route, verbose_name=_('route'))
     tourist = models.ForeignKey(Tourist, verbose_name=_('tourist'))
-
-    def __str__(self):
-        return str()
 
     class Meta:
         verbose_name_plural = 'Saved by'
