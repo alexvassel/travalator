@@ -29,7 +29,7 @@ class PointsListView(LoginRequiredMixin, View):
         route = get_object_or_404(Route, pk=kw.get('route_pk'))
         return JsonResponse({'data': route.formatted_points})
 
-    @method_decorator(cache_page(60*60))
+    @method_decorator(cache_page(1 * 1))
     @method_decorator(vary_on_cookie)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)

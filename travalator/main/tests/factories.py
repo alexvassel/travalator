@@ -11,6 +11,7 @@ class RouteFactory(factory.django.DjangoModelFactory):
 
     tourist = factory.SubFactory(TouristFactory)
     name = factory.Sequence(lambda n: 'Route {}'.format(n + 1))
+    center = 'POINT(37.443949 55.894055)'
 
 
 class PointFactory(factory.django.DjangoModelFactory):
@@ -27,8 +28,10 @@ class RoutePointM2MFactory(factory.django.DjangoModelFactory):
     point_number = factory.Sequence(lambda n: n + 1)
 
 
-class RouteWith2PointsFactory(RouteFactory):
-    m = factory.RelatedFactory(RoutePointM2MFactory, 'route', point__name='m',
+class RouteWith3PointsFactory(RouteFactory):
+    m = factory.RelatedFactory(RoutePointM2MFactory, 'route', point__name='Mytishchi',
                                point__location='POINT(37.765499 55.919847)')
-    h = factory.RelatedFactory(RoutePointM2MFactory, 'route', point__name='h',
+    h = factory.RelatedFactory(RoutePointM2MFactory, 'route', point__name='Khimki',
                                point__location='POINT(37.443949 55.894055)')
+    p = factory.RelatedFactory(RoutePointM2MFactory, 'route', point__name='Podolsk',
+                               point__location='POINT(37.553812 55.432392)')
