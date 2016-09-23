@@ -39,8 +39,6 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.vk',
     'location_field',
     'tinymce'
 )

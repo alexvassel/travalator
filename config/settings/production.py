@@ -62,6 +62,9 @@ ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['example.conf'])
 # See: http://django-storages.readthedocs.io/en/latest/index.html
 INSTALLED_APPS += (
     'storages',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.vk',
+
 )
 
 # AWS cache settings, don't change unless you know what you're doing:
