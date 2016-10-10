@@ -35,3 +35,7 @@ class TestRoute(TestCase):
         response = PointsListView.as_view()(request, route_pk=self.route.pk)
         self.assertEquals(response.status_code, http.client.OK)
 
+
+class TestIndex(TestCase):
+    pass
+
